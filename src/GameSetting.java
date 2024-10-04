@@ -5,13 +5,18 @@ public class GameSetting {
     private int gamePlayerWins;
     private int gamePlayerLosses;
     private int gamePlayerDraws;
-    private int gamePlayerTurns;
-    public int PlayerPosition;
 
 
-public GameSetting(String gameUserName, char gameUserSymbol, int gameUserScore, int gameUserWins, int gameUserLosses, int gameUserDraws, int gameUserTurns, int playerPosition) {
+
+
+public GameSetting(String gameUserName, char gameUserSymbol, int gameUserScore, int gameUserWins, int gameUserLosses, int gameUserDraws) {
     this.gamePlayerName = gameUserName;
     this.gamePlayerSymbol = gameUserSymbol;
+    this.gamePlayerScore = gameUserScore;
+    this.gamePlayerWins = gameUserWins;
+    this.gamePlayerLosses = gameUserLosses;
+    this.gamePlayerDraws = gameUserDraws;
+
 
 
 }
@@ -69,27 +74,12 @@ public GameSetting(String gameUserName, char gameUserSymbol, int gameUserScore, 
         this.gamePlayerDraws = gamePlayerDraws;
     }
 
-    public int getGameUserTurns() {
-        return gamePlayerTurns;
-    }
-
-    public void setGameUserTurns(int gameUserTurns) {
-        this.gamePlayerTurns = gameUserTurns;
-    }
-
-    public int getPlayerPosition() {
-        return PlayerPosition;
-    }
-
-    public void setPlayerPosition(int playerPosition) {
-        PlayerPosition = playerPosition;
-    }
 
     @Override
     public String toString() {
         return "GameSetting{" +
                 "gamePlayerName='" + gamePlayerName + '\'' +
-                ", gamePlayerSymbol='" + gamePlayerSymbol + '\'' +
+                ", gamePlayerSymbol=" + gamePlayerSymbol +
                 ", gamePlayerScore=" + gamePlayerScore +
                 ", gamePlayerWins=" + gamePlayerWins +
                 ", gamePlayerLosses=" + gamePlayerLosses +
