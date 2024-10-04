@@ -1,6 +1,7 @@
 
 import java.awt.desktop.ScreenSleepEvent;
 import java.util.DoubleSummaryStatistics;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -23,20 +24,19 @@ public class Main {
 
 
 
-        Player player1 = new Player("Max",'x',0,0,0,0,0,0);
-        Player player2 = new Player("Adam",'o',0,0,0,0,0,0);
+        Player player1 = new Player("Max",'x',0,0,0,0);
+        Player player2 = new Player("Adam",'o',0,0,0,0);
 
-
-       // PlayerMovesOnTheBoard(gameGrid, sc);
 
         while (true){
+
             PrintGameboard(gameGrid);
 
             PlayerMovesOnTheBoard(gameGrid,player1,sc);
             PrintGameboard(gameGrid);
 
             PlayerMovesOnTheBoard(gameGrid,player2,sc);
-            PrintGameboard(gameGrid);
+
 
 
         }
@@ -68,59 +68,95 @@ public class Main {
 
 
     //Method for Displaying the winner of the game.
-    public static boolean DisplayWinnerAndLoser(Player player1, Player player2,char[][] gameGrid) {
+    public static boolean DisplayWinnerAndLoser(char[][] gameGrid,char symbol) {
+
+        if (gameGrid[0][0] == symbol && gameGrid[0][1] == symbol && gameGrid[0][2] == symbol) {
+            return true;
+        }
 
 
-        return false;
+        if (gameGrid[1][0] == symbol && gameGrid[1][1] == symbol && gameGrid[1][2] == symbol) {
+            return true;
+        }
+
+        if (gameGrid [2][0] == symbol && gameGrid[2][1] == symbol && gameGrid[2][2] == symbol) {
+            return true;
+        }
+
+        if (gameGrid [1][0] == symbol && gameGrid[1][1] == symbol && gameGrid[2][2] == symbol) {
+            return true;
+        }
+        if (gameGrid [2][0] == symbol && gameGrid[1][1] == symbol && gameGrid[0][2] == symbol) {
+            return true;
+        }
+         return false;
     }
 
 
 
     //Method for displaying tied games.
-    public static boolean DisplayDraw(Player player1, Player player2){
+    public static boolean DisplayDraw(char[][] gameGrid,char symbol) {
+        if (gameGrid[0][0] != symbol && gameGrid[0][1] != symbol && gameGrid[0][2] != symbol) {
+            return true;
+        }
+        if (gameGrid[1][0] != symbol && gameGrid[1][1] != symbol && gameGrid[1][2] != symbol) {
+            return true;
+        }
+        if (gameGrid [2][0] != symbol && gameGrid[2][1] != symbol && gameGrid[2][2] != symbol) {
+            return true;
+        }
+        if (gameGrid [1][0] != symbol && gameGrid[1][1] != symbol && gameGrid[2][2] != symbol) {
+            return true;
+        }
+        if (gameGrid [2][0] != symbol && gameGrid[1][1] != symbol && gameGrid[0][2] != symbol) {
+            return true;
+        }
+
         return false;
     }
 
 
     // Method for displaying who has the highest score.
     public static void DisplayGameScore(Player player1, Player player2){
-        if (player1.getGamePlayerScore() > player2.getGamePlayerScore()) {
-            System.out.println("Player: " + player1.getGamePlayerName() + "Score is "+ player1.getGamePlayerScore() );
-        }else {
-            System.out.println("Player: " + player2.getGamePlayerName() + "Score is "+ player2.getGamePlayerScore() );
-        }
+
     }
 
-
-
-    //Method for checking if both player have picked the same spot.
-    public static boolean IsPlayerPositionSame(char[][] gameGrid,int position,Player player1,Player player2) {
-
-        return player1.getPlayerPosition() != player2.getPlayerPosition();
-    }
 
     public static void PlayerMovesOnTheBoard(char[][] gameGrid,Player currentPlayer,Scanner sc) {
-        int row,col;
+
         boolean validMove = false;
 
         while (!validMove) {
-            System.out.println(currentPlayer.getGamePlayerName() + "Enter you move");
-            row = sc.nextInt();
-            col = sc.nextInt();
+            try {
 
+                System.out.println(currentPlayer.getGamePlayerName() + " Enter you move  0:Quit");
+                int move = sc.nextInt();
+                int row = (move - 1) / 3;  // For movement on the board vertical.
+                int col = (move - 1) % 3;  // For movement on the board horizontal
 
+                //Only accepts input between (1 - 9).
+                if (move == 0){
+                    System.out.println("Thanks for playing!, Bye!!");
+                    System.exit(0);
+                }
 
-            if (row <0 || row >2 || col <0 || col >2) {
-                System.out.println(currentPlayer.getGamePlayerName() + "Invalid move");
-                continue;
+                if (row < 0 || row > 9) {
+                    System.out.println(currentPlayer.getGamePlayerName() + " Invalid move");
+                    continue;
+                }
+                if (gameGrid[row][col] != ' ') {
+                    System.out.println("Position already occupied");
+                } else {
+                    gameGrid[row][col] = currentPlayer.getGamePlayerSymbol();
+                    validMove = true;
+                }
+
+            }catch (InputMismatchException e) {
+                System.out.println("Invalid move! Try again 0:Quit");
+                sc.nextLine();
             }
-            if (gameGrid[row][col] != ' ') {
-                System.out.println("Position already occupied");
-            }else {
-                gameGrid[row][col] = currentPlayer.getGamePlayerSymbol();
-                validMove = true;
-            }
 
+          PrintGameboard(gameGrid);
 
         }
     }
