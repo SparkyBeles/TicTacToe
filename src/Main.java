@@ -9,8 +9,6 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-
-
         char[][] gameGrid = new char[3][3];
         gameGrid[0][0] = ' ';
         gameGrid[0][1] = ' ';
@@ -22,24 +20,51 @@ public class Main {
         gameGrid[2][1] = ' ';
         gameGrid[2][2] = ' ';
 
-
-
         Player player1 = new Player("Max",'x',0,0,0,0);
         Player player2 = new Player("Adam",'o',0,0,0,0);
 
 
-        while (true){
+        boolean gameOver = false;
 
-            PrintGameboard(gameGrid);
+        while (!gameOver) {
+            try{
+                System.out.println("Welcome to TicTacToe 0:Quit ");
+                int choice = sc.nextInt();
 
-            PlayerMovesOnTheBoard(gameGrid,player1,sc);
-            PrintGameboard(gameGrid);
+                if (choice == 0) {
+                    System.out.println("Thanks for playing!, Bye!");
+                    System.exit(0);
+                }
+                if (choice == 1) {
+                    PrintGameboard(gameGrid);
+                    PlayerMovesOnTheBoard(gameGrid,player1,sc);
 
-            PlayerMovesOnTheBoard(gameGrid,player2,sc);
+                    if (DisplayWinnerAndLoser(gameGrid,player1)){
+                        System.out.println("You won the game!");
+                        gameOver = true;
+                        continue;
+                    }
 
 
+                    PrintGameboard(gameGrid);
+                    PlayerMovesOnTheBoard(gameGrid,player2,sc);
 
+
+                    if (DisplayWinnerAndLoser(gameGrid,player2)){
+                        System.out.println("You wom the game!");
+                        gameOver = true;
+                        continue;
+                    }
+
+
+                }
+
+            }catch (InputMismatchException e){
+                System.out.println("Please enter a number between 1 and 9  (0:Quit): ");
+                sc.nextLine();
+            }
         }
+
 
 
 
@@ -65,61 +90,65 @@ public class Main {
 
 
 
-
-
-    //Method for Displaying the winner of the game.
-    public static boolean DisplayWinnerAndLoser(char[][] gameGrid,char symbol) {
-
-        if (gameGrid[0][0] == symbol && gameGrid[0][1] == symbol && gameGrid[0][2] == symbol) {
+    public static boolean IsBoardFull(char[][] gameGrid) {
+        if (gameGrid[0][0] == ' ' && gameGrid[0][1] == ' ' && gameGrid[0][2] == ' ') {
             return true;
         }
 
 
-        if (gameGrid[1][0] == symbol && gameGrid[1][1] == symbol && gameGrid[1][2] == symbol) {
+        if (gameGrid[1][0] == ' ' && gameGrid[1][1] == ' ' && gameGrid[1][2] == ' ') {
             return true;
         }
 
-        if (gameGrid [2][0] == symbol && gameGrid[2][1] == symbol && gameGrid[2][2] == symbol) {
+        if (gameGrid[2][0] == ' ' && gameGrid[2][1] == ' ' && gameGrid[2][2] == ' ') {
             return true;
         }
 
-        if (gameGrid [1][0] == symbol && gameGrid[1][1] == symbol && gameGrid[2][2] == symbol) {
-            return true;
-        }
-        if (gameGrid [2][0] == symbol && gameGrid[1][1] == symbol && gameGrid[0][2] == symbol) {
-            return true;
-        }
-         return false;
-    }
-
-
-
-    //Method for displaying tied games.
-    public static boolean DisplayDraw(char[][] gameGrid,char symbol) {
-        if (gameGrid[0][0] != symbol && gameGrid[0][1] != symbol && gameGrid[0][2] != symbol) {
-            return true;
-        }
-        if (gameGrid[1][0] != symbol && gameGrid[1][1] != symbol && gameGrid[1][2] != symbol) {
-            return true;
-        }
-        if (gameGrid [2][0] != symbol && gameGrid[2][1] != symbol && gameGrid[2][2] != symbol) {
-            return true;
-        }
-        if (gameGrid [1][0] != symbol && gameGrid[1][1] != symbol && gameGrid[2][2] != symbol) {
-            return true;
-        }
-        if (gameGrid [2][0] != symbol && gameGrid[1][1] != symbol && gameGrid[0][2] != symbol) {
-            return true;
-        }
 
         return false;
     }
 
 
-    // Method for displaying who has the highest score.
-    public static void DisplayGameScore(Player player1, Player player2){
 
+    //Method for Displaying the winner of the game.
+    public static boolean DisplayWinnerAndLoser(char[][] gameGrid,Player player) {
+        if (gameGrid[0][0] == player.getGamePlayerSymbol() && gameGrid[0][1] == player.getGamePlayerSymbol() && gameGrid[0][2] == player.getGamePlayerSymbol()) {
+            return true;
+        }
+
+
+        if (gameGrid[1][0] == player.getGamePlayerSymbol() && gameGrid[1][1] == player.getGamePlayerSymbol() && gameGrid[1][2] == player.getGamePlayerSymbol()) {
+            return true;
+        }
+
+        if (gameGrid[2][0] == player.getGamePlayerSymbol() && gameGrid[2][1] == player.getGamePlayerSymbol() && gameGrid[2][2] == player.getGamePlayerSymbol()) {
+            return true;
+        }
+
+        if (gameGrid[0][0] == player.getGamePlayerSymbol()&& gameGrid[1][0] == player.getGamePlayerSymbol()&& gameGrid[2][0] == player.getGamePlayerSymbol()) {
+            return true;
+        }
+        if (gameGrid[0][1] == player.getGamePlayerSymbol() && gameGrid[1][1] == player.getGamePlayerSymbol() && gameGrid[2][1] == player.getGamePlayerSymbol()) {
+            return true;
+        }
+
+        if (gameGrid[0][2] == player.getGamePlayerSymbol() && gameGrid[1][2] == player.getGamePlayerSymbol()&& gameGrid[2][2] == player.getGamePlayerSymbol()) {
+            return true;
+        }
+
+        if (gameGrid[2][0] == player.getGamePlayerSymbol() && gameGrid[1][1] == player.getGamePlayerSymbol() && gameGrid[0][2] == player.getGamePlayerSymbol()) {
+            return true;
+        }
+        if (gameGrid[0][0] == player.getGamePlayerSymbol() && gameGrid[1][1] == player.getGamePlayerSymbol() && gameGrid[2][2] == player.getGamePlayerSymbol()) {
+            return true;
+        }
+        return false;
     }
+
+
+
+
+
 
 
     public static void PlayerMovesOnTheBoard(char[][] gameGrid,Player currentPlayer,Scanner sc) {
@@ -139,8 +168,7 @@ public class Main {
                     System.out.println("Thanks for playing!, Bye!!");
                     System.exit(0);
                 }
-
-                if (row < 0 || row > 9) {
+                if (row < 0 || row > 2) {
                     System.out.println(currentPlayer.getGamePlayerName() + " Invalid move");
                     continue;
                 }
@@ -151,12 +179,13 @@ public class Main {
                     validMove = true;
                 }
 
+
             }catch (InputMismatchException e) {
                 System.out.println("Invalid move! Try again 0:Quit");
                 sc.nextLine();
             }
 
-          PrintGameboard(gameGrid);
+
 
         }
     }
