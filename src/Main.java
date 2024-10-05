@@ -1,6 +1,4 @@
 
-import java.awt.desktop.ScreenSleepEvent;
-import java.util.DoubleSummaryStatistics;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,6 +7,7 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
+        //Game Board TicTacToe
         char[][] gameGrid = new char[3][3];
         gameGrid[0][0] = ' ';
         gameGrid[0][1] = ' ';
@@ -20,49 +19,65 @@ public class Main {
         gameGrid[2][1] = ' ';
         gameGrid[2][2] = ' ';
 
-        Player player1 = new Player("Max",'x',0,0,0,0);
-        Player player2 = new Player("Adam",'o',0,0,0,0);
+       //Player class
+        Player player1 = new Player("Max",'x');
+        Player player2 = new Player("Adam",'o');
 
 
         boolean gameOver = false;
 
+        //Loop starts here
+        System.out.println("Welcome to TicTacToe 1:PLAY 0:Quit ");
+        int choice = sc.nextInt();
+
+
         while (!gameOver) {
             try{
-                System.out.println("Welcome to TicTacToe 0:Quit ");
-                int choice = sc.nextInt();
-
                 if (choice == 0) {
-                    System.out.println("Thanks for playing!, Bye!");
+                    System.out.println("Thanks for playing!, Bye!!");
                     System.exit(0);
+                    break;
+
                 }
-                if (choice == 1) {
+
+
+                if (choice == 1) {    //Starts with player 1, checks for win.
                     PrintGameboard(gameGrid);
                     PlayerMovesOnTheBoard(gameGrid,player1,sc);
+                    DisplayWinner(gameGrid,player1);{
 
-                    if (DisplayWinnerAndLoser(gameGrid,player1)){
-                        System.out.println("You won the game!");
-                        gameOver = true;
-                        continue;
-                    }
-
-
-                    PrintGameboard(gameGrid);
-                    PlayerMovesOnTheBoard(gameGrid,player2,sc);
-
-
-                    if (DisplayWinnerAndLoser(gameGrid,player2)){
-                        System.out.println("You wom the game!");
-                        gameOver = true;
-                        continue;
+                        if (DisplayWinner(gameGrid,player1)) {
+                            System.out.println("You win! " + player1.getGamePlayerName());
+                            gameOver = true;
+                            break;
+                        }
                     }
 
 
                 }
 
+                PrintGameboard(gameGrid);
+                PlayerMovesOnTheBoard(gameGrid,player2,sc);    //check for player 2 win.
+                DisplayWinner(gameGrid,player2);{
+                    if (DisplayWinner(gameGrid,player2)) {
+                        System.out.println("You win! " + player2.getGamePlayerName());
+                        gameOver = true;
+                        break;
+                    }
+                }
+
+
+
             }catch (InputMismatchException e){
-                System.out.println("Please enter a number between 1 and 9  (0:Quit): ");
+                System.out.println("Invalid input");
                 sc.nextLine();
             }
+
+
+
+
+
+
         }
 
 
@@ -90,28 +105,11 @@ public class Main {
 
 
 
-    public static boolean IsBoardFull(char[][] gameGrid) {
-        if (gameGrid[0][0] == ' ' && gameGrid[0][1] == ' ' && gameGrid[0][2] == ' ') {
-            return true;
-        }
-
-
-        if (gameGrid[1][0] == ' ' && gameGrid[1][1] == ' ' && gameGrid[1][2] == ' ') {
-            return true;
-        }
-
-        if (gameGrid[2][0] == ' ' && gameGrid[2][1] == ' ' && gameGrid[2][2] == ' ') {
-            return true;
-        }
-
-
-        return false;
-    }
 
 
 
     //Method for Displaying the winner of the game.
-    public static boolean DisplayWinnerAndLoser(char[][] gameGrid,Player player) {
+    public static boolean DisplayWinner(char[][] gameGrid, Player player) {
         if (gameGrid[0][0] == player.getGamePlayerSymbol() && gameGrid[0][1] == player.getGamePlayerSymbol() && gameGrid[0][2] == player.getGamePlayerSymbol()) {
             return true;
         }
@@ -151,6 +149,7 @@ public class Main {
 
 
 
+    //Players move on the board
     public static void PlayerMovesOnTheBoard(char[][] gameGrid,Player currentPlayer,Scanner sc) {
 
         boolean validMove = false;
