@@ -26,65 +26,68 @@ public class Main {
 
         boolean gameOver = false;
 
-        //Loop starts here
-        System.out.println("Welcome to TicTacToe 1:PLAY 0:Quit ");
-        int choice = sc.nextInt();
 
+        try {
+            while (true) {
+                System.out.println("Welcome to TicTacToe 1:PLAY 0:Quit ");
+                int choice1 = sc.nextInt();
 
-        while (!gameOver) {
-            try{
-                if (choice == 0) {
-                    System.out.println("Thanks for playing!, Bye!!");
+                if (choice1 == 0) {
+                    System.out.println("Thanks for playing!, Bye!");
                     System.exit(0);
                     break;
-
                 }
+                if (choice1 == 1) {
 
 
-                if (choice == 1) {    //Starts with player 1, checks for win.
-                    PrintGameboard(gameGrid);
-                    PlayerMovesOnTheBoard(gameGrid,player1,sc);
-                    DisplayWinner(gameGrid,player1);{
 
-                        if (DisplayWinner(gameGrid,player1)) {
-                            System.out.println("You win! " + player1.getGamePlayerName());
-                            gameOver = true;
-                            break;
+                    while (!gameOver) {
+
+                        if (choice1 == 1) {    //Starts with player 1, checks for win.
+                            PrintGameboard(gameGrid);
+                            PlayerMovesOnTheBoard(gameGrid, player1, sc);
+                            DisplayWinner(gameGrid, player1);
+                            {
+
+                                if (DisplayWinner(gameGrid, player1)) {
+                                    System.out.println("You win! " + player1.getGamePlayerName());
+                                    gameOver = true;
+                                    break;
+                                }
+                            }
+
+
+                        }
+
+
+                        PrintGameboard(gameGrid);
+                        PlayerMovesOnTheBoard(gameGrid, player2, sc);    //check for player 2 win.
+                        DisplayWinner(gameGrid, player2);
+                        {
+                            if (DisplayWinner(gameGrid, player2)) {
+                                System.out.println("You win! " + player2.getGamePlayerName());
+                                gameOver = true;
+                                break;
+                            }
+                        }
+
+
+                    }
+                    gameOver = false;
+                    gameGrid = new char[3][3];  // Creates a new game Board
+                    for (int i = 0; i <gameGrid.length; i++) {
+                        for (int j = 0; j <gameGrid[0].length; j++) {
+                            gameGrid[i][j] = ' ';
                         }
                     }
 
-
                 }
-
-                PrintGameboard(gameGrid);
-                PlayerMovesOnTheBoard(gameGrid,player2,sc);    //check for player 2 win.
-                DisplayWinner(gameGrid,player2);{
-                    if (DisplayWinner(gameGrid,player2)) {
-                        System.out.println("You win! " + player2.getGamePlayerName());
-                        gameOver = true;
-                        break;
-                    }
-                }
-
-
-
-            }catch (InputMismatchException e){
-                System.out.println("Invalid input");
-                sc.nextLine();
             }
 
-
-
-
-
-
+        }catch (InputMismatchException e) {
+            System.out.println("Please enter a number between 0 and 3");
+            sc.nextLine();
         }
-
-
-
-
-
-
     }
 
 
@@ -137,10 +140,7 @@ public class Main {
         if (gameGrid[2][0] == player.getGamePlayerSymbol() && gameGrid[1][1] == player.getGamePlayerSymbol() && gameGrid[0][2] == player.getGamePlayerSymbol()) {
             return true;
         }
-        if (gameGrid[0][0] == player.getGamePlayerSymbol() && gameGrid[1][1] == player.getGamePlayerSymbol() && gameGrid[2][2] == player.getGamePlayerSymbol()) {
-            return true;
-        }
-        return false;
+        return gameGrid[0][0] == player.getGamePlayerSymbol() && gameGrid[1][1] == player.getGamePlayerSymbol() && gameGrid[2][2] == player.getGamePlayerSymbol();
     }
 
 
