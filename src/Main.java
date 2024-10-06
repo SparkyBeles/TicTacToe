@@ -31,32 +31,29 @@ public class Main {
             while (true) {
                 System.out.println("Welcome to TicTacToe 1:PLAY 0:Quit ");
                 int choice1 = sc.nextInt();
-
                 if (choice1 == 0) {
                     System.out.println("Thanks for playing!, Bye!");
                     System.exit(0);
                     break;
                 }
+
                 if (choice1 == 1) {
 
-
-
                     while (!gameOver) {
-
                         if (choice1 == 1) {    //Starts with player 1, checks for win.
                             PrintGameboard(gameGrid);
                             PlayerMovesOnTheBoard(gameGrid, player1, sc);
                             DisplayWinner(gameGrid, player1);
                             {
-
                                 if (DisplayWinner(gameGrid, player1)) {
                                     System.out.println("You win! " + player1.getGamePlayerName());
-                                    gameOver = true;
                                     break;
                                 }
+                                if (DisplayTiedGame(gameGrid)) {
+                                System.out.println("Tied Game! ");
+                                break;
                             }
-
-
+                            }
                         }
 
 
@@ -66,12 +63,14 @@ public class Main {
                         {
                             if (DisplayWinner(gameGrid, player2)) {
                                 System.out.println("You win! " + player2.getGamePlayerName());
-                                gameOver = true;
                                 break;
                             }
+
+                       if (DisplayTiedGame(gameGrid)) {
+                           System.out.println("Tied Game! ");
+                           break;
+                       }
                         }
-
-
                     }
                     gameOver = false;
                     gameGrid = new char[3][3];  // Creates a new game Board
@@ -80,13 +79,13 @@ public class Main {
                             gameGrid[i][j] = ' ';
                         }
                     }
-
                 }
             }
 
         }catch (InputMismatchException e) {
             System.out.println("Please enter a number between 0 and 3");
             sc.nextLine();
+
         }
     }
 
@@ -104,39 +103,51 @@ public class Main {
     }
 
 
+    /**
+     *
+     * @param gameGrid
+     * @return Checks for full board to return Tied game true
+     */
+    public static boolean DisplayTiedGame(char[][] gameGrid) {
 
+        //Loops through the game board to find full board
+       for (int row = 0; row < gameGrid.length; row++) {
+           for (int col = 0; col <gameGrid[row].length; col++) {
+               if (gameGrid[row][col] == ' ') {
+                   return false;
+               }
+           }
 
+       }
 
+        return true;
+    }
 
-
-
-
-    //Method for Displaying the winner of the game.
+    /**
+     *
+     * @param gameGrid
+     * @param player
+     * @return Checks for winner.
+     */
     public static boolean DisplayWinner(char[][] gameGrid, Player player) {
         if (gameGrid[0][0] == player.getGamePlayerSymbol() && gameGrid[0][1] == player.getGamePlayerSymbol() && gameGrid[0][2] == player.getGamePlayerSymbol()) {
             return true;
         }
-
-
         if (gameGrid[1][0] == player.getGamePlayerSymbol() && gameGrid[1][1] == player.getGamePlayerSymbol() && gameGrid[1][2] == player.getGamePlayerSymbol()) {
             return true;
         }
-
         if (gameGrid[2][0] == player.getGamePlayerSymbol() && gameGrid[2][1] == player.getGamePlayerSymbol() && gameGrid[2][2] == player.getGamePlayerSymbol()) {
             return true;
         }
-
         if (gameGrid[0][0] == player.getGamePlayerSymbol()&& gameGrid[1][0] == player.getGamePlayerSymbol()&& gameGrid[2][0] == player.getGamePlayerSymbol()) {
             return true;
         }
         if (gameGrid[0][1] == player.getGamePlayerSymbol() && gameGrid[1][1] == player.getGamePlayerSymbol() && gameGrid[2][1] == player.getGamePlayerSymbol()) {
             return true;
         }
-
         if (gameGrid[0][2] == player.getGamePlayerSymbol() && gameGrid[1][2] == player.getGamePlayerSymbol()&& gameGrid[2][2] == player.getGamePlayerSymbol()) {
             return true;
         }
-
         if (gameGrid[2][0] == player.getGamePlayerSymbol() && gameGrid[1][1] == player.getGamePlayerSymbol() && gameGrid[0][2] == player.getGamePlayerSymbol()) {
             return true;
         }
@@ -144,12 +155,15 @@ public class Main {
     }
 
 
-
-
-
-
-
-    //Players move on the board
+    /**
+     * Checks for valid move and place valid move on the board
+     * Have the option to quit the game with 0.
+     * Only accepts input between 1-9, loops till you make a valid input.
+     * Try and catch for invalid input.
+     * @param gameGrid
+     * @param currentPlayer
+     * @param sc
+     */
     public static void PlayerMovesOnTheBoard(char[][] gameGrid,Player currentPlayer,Scanner sc) {
 
         boolean validMove = false;
@@ -167,7 +181,7 @@ public class Main {
                     System.out.println("Thanks for playing!, Bye!!");
                     System.exit(0);
                 }
-                if (row < 0 || row > 2) {
+                if (row < 0 || row > 2) { //Checks for Invalid move
                     System.out.println(currentPlayer.getGamePlayerName() + " Invalid move");
                     continue;
                 }
@@ -177,7 +191,6 @@ public class Main {
                     gameGrid[row][col] = currentPlayer.getGamePlayerSymbol();
                     validMove = true;
                 }
-
 
             }catch (InputMismatchException e) {
                 System.out.println("Invalid move! Try again 0:Quit");
