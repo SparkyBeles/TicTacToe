@@ -1,6 +1,6 @@
 public class GameSetting {
-    private String gamePlayerName;
-    private char gamePlayerSymbol;
+    private final String gamePlayerName;
+    private final char gamePlayerSymbol;
     private int gamePlayerScore;
 
 
@@ -28,20 +28,13 @@ public GameSetting(String gameUserName, char gameUserSymbol, int gamePlayerScore
         return gamePlayerName;
     }
 
-    public void setGamePlayerName(String gamePlayerName) {
-        this.gamePlayerName = gamePlayerName;
 
-
-
-    }
 
     public char getGamePlayerSymbol() {
         return gamePlayerSymbol;
     }
 
-    public void setGamePlayerSymbol(char gamePlayerSymbol) {
-        this.gamePlayerSymbol = gamePlayerSymbol;
-    }
+
 
 
     @Override
