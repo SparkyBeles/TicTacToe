@@ -1,20 +1,28 @@
 public class GameSetting {
     private String gamePlayerName;
     private char gamePlayerSymbol;
+    private int gamePlayerScore;
 
 
 
 
 
-public GameSetting(String gameUserName, char gameUserSymbol) {
+public GameSetting(String gameUserName, char gameUserSymbol, int gamePlayerScore) {
     this.gamePlayerName = gameUserName;
     this.gamePlayerSymbol = gameUserSymbol;
+    this.gamePlayerScore = gamePlayerScore;
 
 
 
 }
 
+    public void setGamePlayerScore(int gamePlayerScore) {
+        this.gamePlayerScore = gamePlayerScore;
+    }
 
+    public int getGamePlayerScore() {
+        return gamePlayerScore;
+    }
 
     public String getGamePlayerName() {
         return gamePlayerName;
