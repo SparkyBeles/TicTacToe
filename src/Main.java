@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -19,9 +20,24 @@ public class Main {
         gameGrid[2][1] = ' ';
         gameGrid[2][2] = ' ';
 
+
+
+
+
+
        //Player class
-        Player player1 = new Player("Max",'x');
-        Player player2 = new Player("Adam",'o');
+        Player player1 = new Player("Max",'x',0);
+        Player player2 = new Player("Adam",'o',0);
+
+        player1.getGamePlayerScore();
+        player2.getGamePlayerScore();
+
+
+        //List for Win Score
+        ArrayList<Integer> ScoreList = new ArrayList<>();
+        ScoreList.add(player1.getGamePlayerScore());
+        ScoreList.add(player2.getGamePlayerScore());
+
 
 
         boolean gameOver = false;
@@ -40,13 +56,16 @@ public class Main {
                 if (choice1 == 1) {
 
                     while (!gameOver) {
-                        if (choice1 == 1) {    //Starts with player 1, checks for win.
+                        if (choice1 == 1) {    //Starts with player 1, checks for win and prints out score points.
                             PrintGameboard(gameGrid);
                             PlayerMovesOnTheBoard(gameGrid, player1, sc);
                             DisplayWinner(gameGrid, player1);
                             {
                                 if (DisplayWinner(gameGrid, player1)) {
-                                    System.out.println("You win! " + player1.getGamePlayerName());
+                                    PrintGameboard(gameGrid);
+                                    player1.setGamePlayerScore(player1.getGamePlayerScore() + 1);
+                                    System.out.println("Winner is! " + player1.getGamePlayerName());
+                                    System.out.println("Win Points " + player1.getGamePlayerScore() + " " +player1.getGamePlayerName());
                                     break;
                                 }
                                 if (DisplayTiedGame(gameGrid)) {
@@ -58,11 +77,14 @@ public class Main {
 
 
                         PrintGameboard(gameGrid);
-                        PlayerMovesOnTheBoard(gameGrid, player2, sc);    //check for player 2 win.
+                        PlayerMovesOnTheBoard(gameGrid, player2, sc);    //check for player 2 win and prints out score points.
                         DisplayWinner(gameGrid, player2);
                         {
                             if (DisplayWinner(gameGrid, player2)) {
-                                System.out.println("You win! " + player2.getGamePlayerName());
+                                PrintGameboard(gameGrid);
+                                player2.setGamePlayerScore(player2.getGamePlayerScore() + 1);
+                                System.out.println("Winner is! " + player2.getGamePlayerName());
+                                System.out.println("Win Points " + player2.getGamePlayerScore() + " " +player2.getGamePlayerName());
                                 break;
                             }
 
@@ -83,7 +105,7 @@ public class Main {
             }
 
         }catch (InputMismatchException e) {
-            System.out.println("Please enter a number between 0 and 3");
+            System.out.println("Please enter a number 1-9  0:Quit");
             sc.nextLine();
 
         }
@@ -171,7 +193,7 @@ public class Main {
         while (!validMove) {
             try {
 
-                System.out.println(currentPlayer.getGamePlayerName() + " Enter you move  0:Quit");
+                System.out.println(currentPlayer.getGamePlayerName() + " Enter your move  0:Quit");
                 int move = sc.nextInt();
                 int row = (move - 1) / 3;  // For movement on the board vertical.
                 int col = (move - 1) % 3;  // For movement on the board horizontal
@@ -182,7 +204,7 @@ public class Main {
                     System.exit(0);
                 }
                 if (row < 0 || row > 2) { //Checks for Invalid move
-                    System.out.println(currentPlayer.getGamePlayerName() + " Invalid move");
+                    System.out.println(currentPlayer.getGamePlayerName() + " Invalid move 1-9 0:Quit");
                     continue;
                 }
                 if (gameGrid[row][col] != ' ') {
@@ -201,6 +223,7 @@ public class Main {
 
         }
     }
+
 
 
 }
