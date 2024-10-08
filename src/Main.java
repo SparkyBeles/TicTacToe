@@ -21,9 +21,8 @@ public class Main {
         gameGrid[2][2] = ' ';
 
         //Player class
-        Player player1 = new Player("Max",'x',0);
-        Player player2 = new Player("Adam",'o',0);
-
+        Player player1 = new Player("", 'x', 0);
+        Player player2 = new Player("", 'o', 0);
 
 
         player1.getGamePlayerScore();
@@ -36,79 +35,81 @@ public class Main {
         ScoreList.add(player2.getGamePlayerScore());
 
 
+        boolean gameOver;
+        while (true) {
+            try{
+                System.out.println("Welcome to the game of Tic-Tac-Toe! 1:PLAY 0:QUIT");
+                int choice = sc.nextInt();
 
-        boolean gameOver = false;
-
-
-        try {
-            while (true) {
-                System.out.println("Welcome to TicTacToe 1:PLAY 0:Quit ");
-                int choice1 = sc.nextInt();
-                if (choice1 == 0) {
-                    System.out.println("Thanks for playing!, Bye!");
+                if (choice == 0) {
+                    System.out.println("Thanks for playing!, bye!!");
                     System.exit(0);
-                    break;
-                }
-                if (choice1 == 1) {
 
-                    while (!gameOver) {
-                        if (choice1 == 1) {    //Starts with player 1, checks for win and prints out score points.
-                            GameManager.PrintGameboard(gameGrid);
-                            GameManager.PlayerMovesOnTheBoard(gameGrid,player1,sc);
-                            {
-                                if (GameManager.DisplayWinner(gameGrid, player1)) {
-                                   GameManager.PrintGameboard(gameGrid);
-                                    player1.setGamePlayerScore(player1.getGamePlayerScore() + 1);
-                                    System.out.println("Winner is! " + player1.getGamePlayerName());
-                                    System.out.println("Win Points " + player1.getGamePlayerScore() + " " +player1.getGamePlayerName());
-                                    break;
-                                }
-                                if (GameManager.DisplayWinner(gameGrid, player1)) {
-                                System.out.println("Tied Game! ");
-                                break;
-                                }
-                            }
-                        }
+                }else if (choice == 1) {
+                    System.out.println("Player 1 name?: ");
+                    String name1 = sc.next();
+                    player1.setGamePlayerName(name1);
 
-                        GameManager.PrintGameboard(gameGrid);
-                        GameManager.PlayerMovesOnTheBoard(gameGrid,player2,sc);   //check for player 2 win and prints out score points.
-                        GameManager.DisplayWinner(gameGrid, player2);
-                        {
-                            if (GameManager.DisplayWinner(gameGrid, player2)) {
-                                GameManager.PrintGameboard(gameGrid);
-                                player2.setGamePlayerScore(player2.getGamePlayerScore() + 1);
-                                System.out.println("Winner is! " + player2.getGamePlayerName());
-                                System.out.println("Win Points " + player2.getGamePlayerScore() + " " +player2.getGamePlayerName());
-                                break;
-                            }
+                    System.out.println("Player 2 name?: ");
+                    String name2 = sc.next();
+                    player2.setGamePlayerName(name2);
 
-                       if (GameManager.DisplayTiedGame(gameGrid)) {
-                           System.out.println("Tied Game! ");
-                           break;
-                       }
-                        }
-                    }
                     gameOver = false;
-                    gameGrid = new char[3][3];  // Creates a new game Board
-                    for (int i = 0; i <gameGrid.length; i++) {
-                        for (int j = 0; j <gameGrid[0].length; j++) {
+                    while (!gameOver) {
+                       GameManager.PrintGameboard(gameGrid);
+                       GameManager.PlayerMovesOnTheBoard(gameGrid,player1,sc,player1.setGamePlayerName(name1));
+                       if (GameManager.DisplayWinner(gameGrid,player1)) {
+                           System.out.println("You won!"+ " " +player1.setGamePlayerName(name1));
+                           player1.setGamePlayerScore(player1.getGamePlayerScore()+1);
+                           System.out.println("Win points " + player1.getGamePlayerScore());
+                           gameOver = true;
+                           continue;
+                       }
+                        if (GameManager.DisplayTiedGame(gameGrid)) {
+                           System.out.println("Tied game ");
+                           gameOver = true;
+                           continue;
+                       }
+
+                        {
+                           GameManager.PrintGameboard(gameGrid);
+                           GameManager.PlayerMovesOnTheBoard(gameGrid,player2,sc,player2.setGamePlayerName(name2));
+                           if (GameManager.DisplayWinner(gameGrid,player2)) {
+                               System.out.println("you won"+ " "+player2.setGamePlayerName(name2));
+                               player2.setGamePlayerScore(player2.getGamePlayerScore()+1);
+                               System.out.println("Win points " + " "+player2.getGamePlayerScore());
+                               gameOver = true;
+                           }else if (GameManager.DisplayTiedGame(gameGrid)) {
+                               System.out.println("Tied game ");
+                               gameOver = true;
+                           }
+                        }
+
+
+                    }
+                    gameGrid = new char[3][3];
+                    for (int i = 0; i < gameGrid.length; i++) {
+                        for (int j = 0; j < gameGrid.length; j++) {
                             gameGrid[i][j] = ' ';
                         }
                     }
+
+
                 }
+
+
+
+            }catch (InputMismatchException e){
+                System.out.println("Try again!");
+                sc.nextLine();
             }
-
-        }catch (InputMismatchException e) {
-            System.out.println("Please enter a number 1-9  0:Quit");
-            sc.nextLine();
-
         }
+
+
+
+
     }
-
-
-
-
-
-
-
 }
+
+
+
