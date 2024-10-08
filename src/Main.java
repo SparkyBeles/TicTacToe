@@ -56,23 +56,23 @@ public class Main {
 
                     gameOver = false;
                     while (!gameOver) {
-                       GameManager.PrintGameboard(gameGrid);
+                       GameManager.PrintGameboard(gameGrid);//Starts with player 1, check for win and tied game.
                        GameManager.PlayerMovesOnTheBoard(gameGrid,player1,sc,player1.setGamePlayerName(name1));
                        if (GameManager.DisplayWinner(gameGrid,player1)) {
                            System.out.println("You won!"+ " " +player1.setGamePlayerName(name1));
                            player1.setGamePlayerScore(player1.getGamePlayerScore()+1);
                            System.out.println("Win points " + player1.getGamePlayerScore());
                            gameOver = true;
-                           continue;
+
                        }
                         if (GameManager.DisplayTiedGame(gameGrid)) {
                            System.out.println("Tied game ");
                            gameOver = true;
-                           continue;
+
                        }
 
                         {
-                           GameManager.PrintGameboard(gameGrid);
+                           GameManager.PrintGameboard(gameGrid);//Player 2s check for win and tied game,
                            GameManager.PlayerMovesOnTheBoard(gameGrid,player2,sc,player2.setGamePlayerName(name2));
                            if (GameManager.DisplayWinner(gameGrid,player2)) {
                                System.out.println("you won"+ " "+player2.setGamePlayerName(name2));
@@ -87,7 +87,7 @@ public class Main {
 
 
                     }
-                    gameGrid = new char[3][3];
+                    gameGrid = new char[3][3]; //Creates a new game board
                     for (int i = 0; i < gameGrid.length; i++) {
                         for (int j = 0; j < gameGrid.length; j++) {
                             gameGrid[i][j] = ' ';
