@@ -16,14 +16,14 @@ public class GameManager extends Player{
      * @param currentPlayer
      * @param sc
      */
-    public static void PlayerMovesOnTheBoard(char[][] gameGrid, Player currentPlayer, Scanner sc) {
+    public static void PlayerMovesOnTheBoard(char[][] gameGrid, Player currentPlayer, Scanner sc,String playerName) {
 
         boolean validMove = false;
 
         while (!validMove) {
             try {
 
-                System.out.println(currentPlayer.getGamePlayerName() + " Enter your move  0:Quit");
+                System.out.println(currentPlayer.setGamePlayerName(playerName) + " Enter your move  0:Quit");
                 int move = sc.nextInt();
                 int row = (move - 1) / 3;  // For movement on the board vertical.
                 int col = (move - 1) % 3;  // For movement on the board horizontal
