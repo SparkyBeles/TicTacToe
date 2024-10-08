@@ -28,6 +28,9 @@ public GameSetting(String gameUserName, char gameUserSymbol, int gamePlayerScore
         return gamePlayerName;
     }
 
+    public String setGamePlayerName(String gamePlayerName) {
+    return gamePlayerName;
+    }
 
 
     public char getGamePlayerSymbol() {
