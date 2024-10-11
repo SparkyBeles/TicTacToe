@@ -11,6 +11,11 @@ Clone the project
 ```bash
   git clone https://https://github.com/SparkyBeles/TicTacToe.git
 ```
+## How to play!
+You can select a position on the board by entering a number from 1 to 9.
+![9tictac](https://github.com/user-attachments/assets/59894991-2ae3-4e9d-b9cb-adf99c5e489b)
+
+
 
 
 
