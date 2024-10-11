@@ -14,6 +14,7 @@ public GameSetting(String gameUserName, char gameUserSymbol, int gamePlayerScore
 
 
 
+
 }
 
     public void setGamePlayerScore(int gamePlayerScore) {
