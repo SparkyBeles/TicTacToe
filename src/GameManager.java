@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -8,6 +7,103 @@ public class GameManager extends Player{
     public GameManager(String gameUserName, char gameUserSymbol, int gamePlayerScore) {
         super(gameUserName, gameUserSymbol, gamePlayerScore);
     }
+
+      //New instance of board to use in while loop.
+     //Made Static to be able to use in while loop.
+    static Board board = new Board();
+    static Scanner sc = new Scanner(System.in);
+
+
+    /**
+     * while loop for the TicTacToe
+     *
+     */
+    public static void play() {
+
+    boolean gameOver;
+    while (true) {
+        try {
+            System.out.println("Welcome to the game of Tic-Tac-Toe! 1:PLAY 0:QUIT");
+            int choice = sc.nextInt();
+
+            if (choice == 0) { //The loop ends with 0
+                System.out.println("Thanks for playing!, bye!!");
+                System.exit(0);
+
+            } else if (choice == 1) {
+                System.out.println("Player 1 name?: ");
+                String name1 = sc.next();
+                player1.setGamePlayerName(name1);
+
+                System.out.println("Player 2 name?: ");
+                String name2 = sc.next();
+                player2.setGamePlayerName(name2);
+
+                gameOver = false;
+                while (!gameOver) {
+                    GameManager.board.PrintGameGrid();//Starts with player 1, check for win and tied game.
+                    GameManager.PlayerMovesOnTheBoard(board.gameGrid, player1, sc, player1.setGamePlayerName(name1));
+                    if (GameManager.DisplayWinner(board.gameGrid, player1)) {
+                        System.out.println("You won!" + " " + player1.setGamePlayerName(name1));
+                        player1.setGamePlayerScore(player1.getGamePlayerScore() + 1);
+                        System.out.println("Win points " + player1.getGamePlayerScore());
+                        gameOver = true;
+
+                    }
+                    if (GameManager.DisplayTiedGame(board.gameGrid)) {
+                        System.out.println("Tied game ");
+                        gameOver = true;
+
+                    }
+
+                    {
+                        GameManager.PrintGameboard(board.gameGrid);//Player 2s check for win and tied game,
+                        GameManager.PlayerMovesOnTheBoard(board.gameGrid, player2, sc, player2.setGamePlayerName(name2));
+                        if (GameManager.DisplayWinner(board.gameGrid, player2)) {
+                            System.out.println("you won" + " " + player2.setGamePlayerName(name2));
+                            player2.setGamePlayerScore(player2.getGamePlayerScore() + 1);
+                            System.out.println("Win points " + " " + player2.getGamePlayerScore());
+                            gameOver = true;
+                        } else if (GameManager.DisplayTiedGame(board.gameGrid)) {
+                            System.out.println("Tied game ");
+                            gameOver = true;
+                        }
+                    }
+
+
+                }
+                board.initializeGameGrid();
+
+
+            }
+
+
+        } catch (InputMismatchException e) {
+            System.out.println("Try again!");
+            sc.nextLine();
+        }
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      *  Checks for players move on the board and for invalid move.
