@@ -10,15 +10,20 @@ public class GameManager extends Player{
 
       //New instance of board to use in while loop.
      //Made Static to be able to use in while loop.
-    static Board board = new Board();
-    static Scanner sc = new Scanner(System.in);
+
+    Board board = new Board();
+
+    Scanner sc = new Scanner(System.in);
+    Player player1 = new Player("", 'X', 0);
+    Player player2 = new Player("", 'X', 0);
+
 
 
     /**
      * while loop for the TicTacToe
      *
      */
-    public static void play() {
+    public  void play() {
 
     boolean gameOver;
     while (true) {
@@ -41,7 +46,7 @@ public class GameManager extends Player{
 
                 gameOver = false;
                 while (!gameOver) {
-                    GameManager.board.PrintGameGrid();//Starts with player 1, check for win and tied game.
+                    board.PrintGameGrid();//Starts with player 1, check for win and tied game.
                     GameManager.PlayerMovesOnTheBoard(board.gameGrid, player1, sc, player1.setGamePlayerName(name1));
                     if (GameManager.DisplayWinner(board.gameGrid, player1)) {
                         System.out.println("You won!" + " " + player1.setGamePlayerName(name1));
