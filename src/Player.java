@@ -6,8 +6,7 @@ public class Player extends GameSetting {
     }
 
     //Made static in order to use in GameManager.
-     static Player player1 = new Player("", 'X', 0);
-     static Player player2 = new Player("", 'O', 0);
+
 
 
 
