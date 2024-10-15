@@ -8,11 +8,12 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        GameManager.play();
-        GameManager gameManager = new GameManager("",'x',0);
+        GameManager manager = new GameManager("",'x',0);
+        manager.play();
 
 
-        ;
+
+
 
 
     }
